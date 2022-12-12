@@ -1,0 +1,82 @@
+<!DOCTYPE>
+<html>
+
+<head>
+  <title>CSS3 Perspective Playground</title>
+  <link rel="stylesheet" type="text/css" href="main.css" />
+</head>
+
+<body>
+  <div id="app" v-cloak>
+    <h2>CSS3 Perspective Playground</h2>
+    <main>
+      <section class="settings">
+        <div class="settings-container">
+          <label>perspective: {{ perspective }}px;</label>
+          <input type="range" min="0" max="999" v-model="perspective"/>
+
+          <label>rotateX: {{ xRotation}}deg; </label>
+          <input type="range" min="-180" max="180" v-model="xRotation"/>
+
+          <label>rotateY: {{ yRotation}}deg; </label>
+          <input type="range" min="-180" max="180" v-model="yRotation"/>
+
+          <label>rotateZ: {{ zRotation}}deg; </label>
+          <input type="range" min="-180" max="180" v-model="zRotation"/>
+
+          <button type="button" @click.prevents="reset">Reset</button>
+          <button type="button" @click.prevents="copy">Copy</button>
+          <label for="box-select-color">Choose a color</label>
+          <select name="box-color" v-model="selectedColor">
+            <option value="">Choose color</option>
+            <option value="red_selected">Red</option>
+            <option value="green_selected">Green</option>
+            <option value="blue_selected">Blue</option>
+          </select>
+          
+        </div>
+      </section>
+      <section class="output">
+        <div class="box-container">
+          <div class="box" :class="selectedColor":style="box"></div>
+        </div>
+      </section>
+    </main>
+
+  </div>
+
+  <css-doodle>
+    :doodle {
+    @grid: 1x3 / 100vmax;
+    position: absolute;
+    top: 0; left: 0;
+    z-index: 0;
+    }
+
+    @size: 100% 150%;
+    position: absolute;
+
+    background: @m(100, (
+    linear-gradient(transparent, @p(
+    #FFFDE1@repeat(2, @p([0-9a-f])),
+    #FB3569@repeat(2, @p([0-9a-f]))
+    ))
+    @r(0%, 100%) @r(0%, 100%) /
+    @r(1px) @r(23vmin)
+    no-repeat
+    ));
+
+    will-change: transform;
+    animation: f 50s linear calc(-50s / @size() * @i()) infinite;
+    @keyframes f {
+    from { transform: translateY(-100%) }
+    to { transform: translateY(100%) }
+    }
+  </css-doodle>
+
+  <script src="https://unpkg.com/css-doodle@0.6.1/css-doodle.min.js"></script>
+  <script src="https://unpkg.com/vue@next"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
