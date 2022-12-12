@@ -5,7 +5,8 @@ const vm = Vue.createApp({
        xRotation: 0,
        yRotation: 0,
        zRotation: 0,
-       selectedColor: ""
+       selectedColor: "",
+       popup: 0
     }
 },
     computed: {
@@ -31,8 +32,11 @@ const vm = Vue.createApp({
         async copy() {
             let text = `transform:${this.box.transform}`
             await navigator.clipboard.writeText(text)
+            this.popup = 1
 
-            alert('CSS copied to clipboard !')
+            setTimeout(() => {
+                this.popup = 0
+            }, 2000)
         }
     }
 }).mount('#app')
